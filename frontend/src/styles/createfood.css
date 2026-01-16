@@ -1,0 +1,165 @@
+@import "./variables.css";
+
+/* Mobile-first CreateFood styles */
+.cf-page {
+  padding: 16px;
+  min-height: calc(100vh - 64px);
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* darken the background image with a semi-transparent overlay for contrast */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32)),
+    linear-gradient(var(--bg-image-overlay), var(--bg-image-overlay)),
+    url("https://images.unsplash.com/photo-1581349485608-9469926a8e5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmVzdGF1cmFudCUyMGtpdGNoZW58ZW58MHx8MHx8fDA%3D");
+  background-size: cover;
+  background-position: center;
+}
+
+.cf-card {
+  width: 100%;
+  max-width: 720px;
+  /* lighter surface so content stands out over the background image */
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(2, 8, 20, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(6px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .cf-card {
+    background: rgba(6, 10, 14, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.cf-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cf-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.cf-input,
+.cf-textarea,
+.cf-file {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.cf-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.cf-tag-input {
+  border: none;
+  background: transparent;
+  padding: 6px 8px;
+  min-width: 120px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.cf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.cf-chip-icon {
+  opacity: 0.9;
+  transform: translateY(1px);
+}
+.cf-chip-text {
+  font-size: 13px;
+}
+.cf-chip-remove {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  margin-left: 4px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+.cf-textarea {
+  resize: vertical;
+}
+
+.cf-video-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cf-preview {
+  margin-top: 8px;
+  width: 100%;
+  max-height: 320px;
+  border-radius: 8px;
+  background: #000;
+}
+
+.cf-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cf-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.cf-btn-outline {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: var(--text);
+}
+
+@media (min-width: 720px) {
+  .cf-card {
+    padding: 24px;
+    gap: 16px;
+  }
+  .cf-page {
+    padding: 24px;
+  }
+  .cf-title {
+    font-size: 20px;
+  }
+}

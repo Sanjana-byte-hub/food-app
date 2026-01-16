@@ -1,0 +1,202 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Top navigation used across pages */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: transparent;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 20px;
+  z-index: 50;
+}
+.top-nav a {
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 180ms ease;
+  background: rgba(0, 0, 0, 0.4);
+}
+.top-nav a.primary {
+  background: rgba(255, 107, 107, 0.9);
+  color: white;
+}
+.top-nav a:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 520px) {
+  .top-nav {
+    justify-content: center;
+  }
+}
+
+/* Reels / Fullscreen vertical scroll */
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.reels-container {
+  flex: 1;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+}
+
+.reel {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reel-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.reel-actions {
+  position: absolute;
+  right: 16px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:active {
+  transform: scale(0.85);
+}
+
+.action-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  color: #fff;
+}
+
+.like-btn.active .action-icon {
+  animation: heartBeat 0.3s ease;
+  color: #ff6b6b;
+}
+
+.save-btn.active .action-icon {
+  color: #ff6b6b;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.overlay {
+  position: absolute;
+  left: 16px;
+  right: 80px;
+  bottom: 70px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 5;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.2;
+  max-width: 100%;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.visit-btn {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.visit-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Small adjustments for very small screens */
+@media (max-width: 420px) {
+  .description {
+    font-size: 14px;
+  }
+  .visit-btn {
+    padding: 7px 10px;
+  }
+}
