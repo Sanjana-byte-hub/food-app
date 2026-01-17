@@ -12,7 +12,7 @@ const Profile = () => {
 
   useEffect(() => {
   axios
-    .get(`http://localhost:3000/api/food-partner/${id}`, {
+    .get(`${import.meta.env.VITE_API_URL}/api/food-partner/${id}`, {
       withCredentials: true,
     })
     .then((response) => {

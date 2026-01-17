@@ -10,7 +10,7 @@ const Saved = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food/save", {
+      .get(`${import.meta.env.VITE_API_URL}/api/food/save`, {
         withCredentials: true,
       })
      .then((res) => {

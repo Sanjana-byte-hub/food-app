@@ -36,7 +36,7 @@ const Home = () => {
   
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/api/food`, { withCredentials: true })
       .then((res) => {
         const foodItems = res.data.foodItems || [];
         
@@ -53,7 +53,7 @@ const Home = () => {
  
   const likeVideo = async (foodId) => {
   const res = await axios.post(
-    "http://localhost:3000/api/food/like",
+    `${import.meta.env.VITE_API_URL}/api/food/like`,
     { foodId },
     { withCredentials: true }
   );
@@ -73,7 +73,7 @@ const Home = () => {
 
 const saveVideo = async (foodId) => {
   const res = await axios.post(
-    "http://localhost:3000/api/food/save",
+    `${import.meta.env.VITE_API_URL}/api/food/save`,
     { foodId },
     { withCredentials: true }
   );
