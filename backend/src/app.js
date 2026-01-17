@@ -12,10 +12,11 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://food-frontend.vercel.app"
+    "https://food-app-zeta-swart.vercel.app"
   ],
   credentials: true
 }));
+
 
 
 app.use(express.urlencoded({ extended: true }));
