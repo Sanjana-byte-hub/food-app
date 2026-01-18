@@ -23,9 +23,12 @@ async function createFood(req, res) {
 }
 
 async function getFoodItems(req, res) {
-  const foods = await foodModel.find({});
+  // Get all food items
+  const foods = await foodModel.find({}).populate("foodPartner");
 
-  const userId = req.user?._id; 
+  // If a user is logged in, track liked/saved status
+  const userId = req.user?._id;
+
   const foodWithStatus = await Promise.all(
     foods.map(async (food) => {
       let liked = false;
@@ -40,8 +43,9 @@ async function getFoodItems(req, res) {
 
       return {
         ...food.toObject(),
-        liked: !!liked,
-        saved: !!saved,
+        likeCount: food.likeCount || 0,
+        liked: Boolean(liked),
+        saved: Boolean(saved),
         saveCount,
       };
     })
@@ -49,6 +53,7 @@ async function getFoodItems(req, res) {
 
   res.status(200).json({ foodItems: foodWithStatus });
 }
+
 
 
 async function likeFood(req, res) {

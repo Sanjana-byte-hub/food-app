@@ -30,30 +30,7 @@ const navigate = useNavigate();
     };
   }, [videoPreview]);
 
-  // function addTagFromInput() {
-  //   const v = tagInput.trim();
-  //   if (!v || tags.includes(v)) {
-  //     setTagInput("");
-  //     return;
-  //   }
-  //   setTags((s) => [...s, v]);
-  //   setTagInput("");
-  // }
-
-  // function handleTagKeyDown(e) {
-  //   if (e.key === "Enter" || e.key === ",") {
-  //     e.preventDefault();
-  //     addTagFromInput();
-  //   }
-  //   if (e.key === "Backspace" && tagInput === "" && tags.length) {
-  //     setTags((s) => s.slice(0, -1));
-  //   }
-  // }
-
-  // function removeTag(idx) {
-  //   setTags((s) => s.filter((_, i) => i !== idx));
-  // }
-
+ 
   async function handleSubmit(e) {
     e.preventDefault();
 

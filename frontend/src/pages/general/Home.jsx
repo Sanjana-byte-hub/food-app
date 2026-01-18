@@ -133,9 +133,10 @@ const saveVideo = async (foodId) => {
 
             <div className="overlay">
               <div className="description">{v.description}</div>
-              <Link className="visit-btn" to={`/food-partner/${v.foodPartner}`}>
-                Visit Store
-              </Link>
+              <Link className="visit-btn" to={`/food-partner/${v.foodPartner?._id}`}>
+  Visit Store
+</Link>
+
             </div>
           </div>
         ))}
