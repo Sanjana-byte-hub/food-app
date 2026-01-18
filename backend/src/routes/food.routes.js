@@ -4,11 +4,9 @@ const authMiddleware = require("../middleware/auth.middleware");
 const router = express.Router();
 const multer = require("multer");
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
+const upload = multer({ storage: multer.memoryStorage() });
 
-/* POST /api/food/ [protected]*/
+// Create food (food partners only)
 router.post(
   "/",
   authMiddleware.authFoodPartnerMiddleware,
@@ -16,23 +14,16 @@ router.post(
   foodController.createFood
 );
 
-/* GET /api/food[protected]*/
-//router.get("/", authMiddleware.authUserMiddleware, foodController.getFoodItems);
-router.get("/", getFoodItems);
+// Get all food items
+router.get("/", foodController.getFoodItems);
 
-router.post(
-  "/like",
-  authMiddleware.authUserMiddleware,
-  foodController.likeFood
-);
-router.post(
-  "/save",
-  authMiddleware.authUserMiddleware,
-  foodController.saveFood
-);
-router.get(
-  "/save",
-  authMiddleware.authUserMiddleware,
-  foodController.getSavedFood
-);
+// Like a food item (users only)
+router.post("/like", authMiddleware.authUserMiddleware, foodController.likeFood);
+
+// Save a food item (users only)
+router.post("/save", authMiddleware.authUserMiddleware, foodController.saveFood);
+
+// Get saved food (users only)
+router.get("/save", authMiddleware.authUserMiddleware, foodController.getSavedFood);
+
 module.exports = router;
