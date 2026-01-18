@@ -94,7 +94,12 @@ async function loginUser(req, res) {
 }
 
 function logoutUser(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
+
   res.status(200).json({
     message: "user logged out successfully",
   });
@@ -189,7 +194,12 @@ async function loginFoodPartner(req, res) {
 }
 
 function logoutfoodPartner(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+});
+
   res.status(200).json({
     message: "food partner logged out successfully",
   });
