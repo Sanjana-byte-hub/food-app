@@ -13,12 +13,11 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://food-app-zeta-swart.vercel.app",
-    "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app/",
-    "https://food-lsebpmu99-sanjana-byte-hubs-projects.vercel.app/",
+    "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app",
+    "https://food-lsebpmu99-sanjana-byte-hubs-projects.vercel.app"
   ],
   credentials: true
 }));
-
 
 
 app.use(express.urlencoded({ extended: true }));
