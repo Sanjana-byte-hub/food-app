@@ -24,8 +24,9 @@ async function createFood(req, res) {
 
 async function getFoodItems(req, res) {
   // Get all food items
-  const foods = await foodModel.find({}).populate("foodPartner");
-
+  const foods = await foodModel
+    .find({ foodPartner: { $ne: null } })
+    .populate("foodPartner");
   // If a user is logged in, track liked/saved status
   const userId = req.user?._id;
 
@@ -109,7 +110,12 @@ async function saveFood(req, res) {
 async function getSavedFood(req,res){
   const user = req.user;
    
-  const savedFoods = await saveModel.find({user:user._id}).populate('food');
+  const savedFoods = await saveModel
+  .find({ user: user._id })
+  .populate({
+    path: "food",
+    populate: { path: "foodPartner" }
+  });
 
   res.status(200).json({
     savedFoods: savedFoods || [],
