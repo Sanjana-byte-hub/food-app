@@ -11,7 +11,9 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://food-app-zeta-swart.vercel.app",
+  "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app"
 ];
+
 
 app.use(
   cors({
