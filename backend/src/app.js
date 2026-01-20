@@ -8,19 +8,21 @@ const foodPartnerRoutes = require("./routes/food-partner.routes");
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://food-app-zeta-swart.vercel.app",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://food-app-zeta-swart.vercel.app",
+      "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app",
+      "https://food-8nt2890mj-sanjana-byte-hubs-projects.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(cors(corsOptions));
-
 
 app.get("/", (req, res) => {
   res.send("Backend is running");
