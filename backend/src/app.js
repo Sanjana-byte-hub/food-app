@@ -15,24 +15,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // Allowed origins for CORS
 const allowedOrigins = [
-  "http://localhost:5173",
   "https://food-app-zeta-swart.vercel.app",
-  "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app",
+  "https://food-app-git-main-sanjana-byte-hubs-projects.vercel.app"
 ];
 
-// CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); 
-      if (allowedOrigins.indexOf(origin) === -1) {
-        return callback(new Error("CORS policy: origin not allowed"), false);
+      if (!origin) return callback(null, true); // allow server-to-server or Postman
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
       }
-      return callback(null, true);
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
