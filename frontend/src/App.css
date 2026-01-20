@@ -200,3 +200,17 @@ body {
     padding: 7px 10px;
   }
 }
+/* Shift Visit Store button higher on small screens */
+@media (max-width: 600px) {
+  .overlay {
+    bottom: 110px; /* move overlay higher so Visit Store button is visible */
+  }
+  
+  .reel-actions {
+    bottom: 120px; /* move like/save buttons higher too */
+  }
+  
+  .visit-btn {
+    padding: 8px 12px; /* optional: keep buttons touch-friendly */
+  }
+}
