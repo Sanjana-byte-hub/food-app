@@ -19,7 +19,7 @@ router.post("/food-partner/login", authController.loginFoodPartner);
 router.post(
   "/food-partner/logout",
   authMiddleware.authFoodPartnerMiddleware,
-  authController.logoutFoodPartner
+  authController.logoutfoodPartner
 );
 
 module.exports = router;
