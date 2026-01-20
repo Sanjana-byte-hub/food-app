@@ -32,11 +32,10 @@ async function registerUser(req, res) {
     process.env.JWT_SECRET
   );
 
-  res.cookie("token", token, {
+ res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-   
+  secure: process.env.NODE_ENV === "production", // only over HTTPS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 });
 
 
@@ -77,11 +76,12 @@ async function loginUser(req, res) {
     process.env.JWT_SECRET
   );
 
-  res.cookie("token", token, {
+ res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none"
+  secure: process.env.NODE_ENV === "production", // only over HTTPS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 });
+
 
 
   res.status(201).json({
@@ -134,10 +134,10 @@ async function registerFoodPartner(req, res) {
   );
   res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  
+  secure: process.env.NODE_ENV === "production", // only over HTTPS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 });
+
 
 
   res.status(201).json({
@@ -176,12 +176,12 @@ async function loginFoodPartner(req, res) {
     },
     process.env.JWT_SECRET
   );
-  res.cookie("token", token, {
+ res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-   
+  secure: process.env.NODE_ENV === "production", // only over HTTPS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 });
+
 
   res.status(201).json({
     message: "food partner logged in successfully",
