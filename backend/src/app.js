@@ -8,10 +8,12 @@ const foodPartnerRoutes = require("./routes/food-partner.routes");
 
 const app = express();
 
+/* MIDDLEWARES FIRST */
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+/* SIMPLE CORS (NO CUSTOM OPTIONS HANDLER) */
 app.use(
   cors({
     origin: [
@@ -23,22 +25,19 @@ app.use(
   })
 );
 
-// TEST ROUTE (VERY IMPORTANT)
-app.get("/api/food", (req, res) => {
-  res.json({ ok: true });
+/* TEST ROUTE (VERY IMPORTANT) */
+app.get("/test", (req, res) => {
+  res.json({ success: true });
 });
 
-// REAL ROUTES
+/* ROUTES */
 app.use("/api/auth", authRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/food-partner", foodPartnerRoutes);
 
+/* ROOT */
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
-app.get("/test", (req, res) => {
-  res.send("TEST OK");
-});
-
 
 module.exports = app;
