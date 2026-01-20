@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/auth.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 const UserRegister = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const UserRegister = () => {
     const password = e.target.password.value;
 
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/user/register`,
+      `${BACKEND_URL}/api/auth/user/register`,
       {
         fullName: `${firstName} ${lastName}`,
         email,
@@ -33,6 +34,9 @@ const UserRegister = () => {
     }
 
   };
+
+
+console.log("Backend URL:", BACKEND_URL);
 
   return (
     <div className="auth-wrapper">

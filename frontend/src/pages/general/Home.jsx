@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { BACKEND_URL } from "../config";
 
 const Home = () => {
   const containerRef = useRef(null);
@@ -36,7 +36,7 @@ const Home = () => {
   
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/api/food`, { withCredentials: true })
+      .get(`${BACKEND_URL}/api/food`, { withCredentials: true })
       .then((res) => {
         const foodItems = res.data.foodItems || [];
         
@@ -53,7 +53,7 @@ const Home = () => {
  
   const likeVideo = async (foodId) => {
   const res = await axios.post(
-    `${import.meta.env.VITE_API_URL}/api/food/like`,
+    `${BACKEND_URL}/api/food/like`,
     { foodId },
     { withCredentials: true }
   );
@@ -73,7 +73,7 @@ const Home = () => {
 
 const saveVideo = async (foodId) => {
   const res = await axios.post(
-    `${import.meta.env.VITE_API_URL}/api/food/save`,
+    `${BACKEND_URL}/api/food/save`,
     { foodId },
     { withCredentials: true }
   );

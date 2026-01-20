@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/profile.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 const Profile = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const Profile = () => {
 
   useEffect(() => {
   axios
-    .get(`${import.meta.env.VITE_API_URL}/api/food-partner/${id}`, {
+    .get(`${BACKEND_URL}/api/food-partner/${id}`, {
       withCredentials: true,
     })
     .then((response) => {

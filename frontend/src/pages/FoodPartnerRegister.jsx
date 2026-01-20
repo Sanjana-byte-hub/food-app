@@ -18,7 +18,7 @@ const PartnerRegister = () => {
       const address = e.target.address.value;
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/food-partner/register`,
+        `${BACKEND_URL}/api/auth/food-partner/register`,
         {
           name,
           contactName,

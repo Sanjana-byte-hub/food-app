@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import "../../styles/saved.css";
 import axios from "axios";
+import { BACKEND_URL } from "../config"; 
 
 const Saved = () => {
   const containerRef = useRef(null);
@@ -10,7 +11,7 @@ const Saved = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/api/food/save`, {
+      .get(`${BACKEND_URL}/api/food/save`, {
         withCredentials: true,
       })
      .then((res) => {

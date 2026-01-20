@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/auth.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 const PartnerLogin = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const PartnerLogin = () => {
       const password = e.target.password.value;
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/food-partner/login`,
+        `${BACKEND_URL}/api/auth/food-partner/login`,
         { email, password },
         { withCredentials: true }
       );

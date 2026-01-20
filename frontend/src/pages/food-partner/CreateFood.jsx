@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../styles/createfood.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 const CreateFood = () => {
   const [name, setName] = useState("");
@@ -51,7 +52,7 @@ const navigate = useNavigate();
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/food`,
+        `${BACKEND_URL}/api/food`,
         formData,
         {
           withCredentials: true,

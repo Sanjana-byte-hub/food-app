@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import axios from "axios";
+import { BACKEND_URL } from "../config"; 
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const UserLogin = () => {
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/user/login`,
+        `${BACKEND_URL}/api/auth/user/login`,
         { email, password },
         { withCredentials: true }
       );
