@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/auth.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 const PartnerRegister = () => {
   const navigate = useNavigate();

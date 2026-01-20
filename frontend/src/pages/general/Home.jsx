@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../../config";
 
 const Home = () => {
   const containerRef = useRef(null);

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../styles/createfood.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../../config";
 
 const CreateFood = () => {
   const [name, setName] = useState("");
