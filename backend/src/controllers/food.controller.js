@@ -6,27 +6,40 @@ const { v4: uuid } = require("uuid")
 
 
 async function createFood(req, res) {
-   const fileUploadResult = await storageService.uploadFile(req.file.buffer, uuid())
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "Video file is required" });
+    }
+
+    const fileUploadResult = await storageService.uploadFile(
+      req.file.buffer,
+      uuid()
+    );
 
     const foodItem = await foodModel.create({
-        name: req.body.name,
-        description: req.body.description,
-        video: fileUploadResult.url,
-        foodPartner: req.foodPartner._id
-    })
+      name: req.body.name,
+      description: req.body.description,
+      video: fileUploadResult.url,
+      foodPartner: req.foodPartner._id,
+    });
 
     res.status(201).json({
-        message: "food created successfully",
-        food: foodItem
-    })
-
+      message: "food created successfully",
+      food: foodItem,
+    });
+  } catch (error) {
+    console.error("Create food error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 }
+
 
 async function getFoodItems(req, res) {
   // Get all food items
   const foods = await foodModel
-    .find({ foodPartner: { $ne: null } })
-    .populate("foodPartner");
+  .find()
+  .populate("foodPartner");
+
   // If a user is logged in, track liked/saved status
   const userId = req.user?._id;
 
@@ -56,56 +69,82 @@ async function getFoodItems(req, res) {
 }
 
 
-
 async function likeFood(req, res) {
-  const { foodId } = req.body;
-  const user = req.user;
+  try {
+    const { foodId } = req.body;
+    const user = req.user;
 
-  const isAlreadyLiked = await likeModel.findOne({ user: user._id, food: foodId });
+    const food = await foodModel.findById(foodId);
+    if (!food) {
+      return res.status(404).json({ message: "Food not found" });
+    }
 
-  let liked;
-  if (isAlreadyLiked) {
-    await likeModel.deleteOne({ user: user._id, food: foodId });
-    await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: -1 } });
-    liked = false;
-  } else {
-    await likeModel.create({ user: user._id, food: foodId });
-    await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
-    liked = true;
+    const isAlreadyLiked = await likeModel.findOne({
+      user: user._id,
+      food: foodId,
+    });
+
+    let liked;
+    if (isAlreadyLiked) {
+      await likeModel.deleteOne({ user: user._id, food: foodId });
+      await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: -1 } });
+      liked = false;
+    } else {
+      await likeModel.create({ user: user._id, food: foodId });
+      await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
+      liked = true;
+    }
+
+    const updatedFood = await foodModel.findById(foodId);
+
+    res.status(200).json({
+      likeCount: updatedFood.likeCount,
+      liked,
+    });
+  } catch (error) {
+    console.error("Like error:", error);
+    res.status(500).json({ message: "Server error" });
   }
-
-  const updatedFood = await foodModel.findById(foodId);
-
-  res.status(200).json({
-    likeCount: updatedFood.likeCount,
-    liked,
-  });
 }
+
 
 
 async function saveFood(req, res) {
-  const { foodId } = req.body;
-  const user = req.user;
+  try {
+    const { foodId } = req.body;
+    const user = req.user;
 
-  const isAlreadySaved = await saveModel.findOne({ user: user._id, food: foodId });
+    const food = await foodModel.findById(foodId);
+    if (!food) {
+      return res.status(404).json({ message: "Food not found" });
+    }
 
-  let saved;
-  if (isAlreadySaved) {
-    await saveModel.deleteOne({ user: user._id, food: foodId });
-    saved = false;
-  } else {
-    await saveModel.create({ user: user._id, food: foodId });
-    saved = true;
+    const isAlreadySaved = await saveModel.findOne({
+      user: user._id,
+      food: foodId,
+    });
+
+    let saved;
+    if (isAlreadySaved) {
+      await saveModel.deleteOne({ user: user._id, food: foodId });
+      saved = false;
+    } else {
+      await saveModel.create({ user: user._id, food: foodId });
+      saved = true;
+    }
+
+    const saveCount = await saveModel.countDocuments({ food: foodId });
+
+    res.status(200).json({
+      saveCount,
+      saved,
+    });
+  } catch (error) {
+    console.error("Save error:", error);
+    res.status(500).json({ message: "Server error" });
   }
-
-  const food = await foodModel.findById(foodId);
-  const saveCount = await saveModel.countDocuments({ food: foodId });
-
-  res.status(200).json({
-    saveCount,
-    saved,
-  });
 }
+
 
 async function getSavedFood(req,res){
   const user = req.user;
