@@ -8,40 +8,30 @@ const foodPartnerRoutes = require("./routes/food-partner.routes");
 
 const app = express();
 
-// List of allowed origins
+// Allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://food-app-zeta-swart.vercel.app", // your frontend
+  "https://food-app-zeta-swart.vercel.app",
 ];
 
-// CORS configuration
+// CORS middleware
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like Postman)
-      if (!origin) return callback(null, true);
-      if (!allowedOrigins.includes(origin)) {
-        return callback(new Error("CORS policy does not allow this origin"), false);
+      if (!origin) return callback(null, true); // Postman / server-to-server
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
-      return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true, // allow cookies
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Handle preflight requests manually
-app.options("*", (req, res) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    allowedOrigins.includes(req.headers.origin) ? req.headers.origin : ""
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  return res.sendStatus(204);
-});
+// ✅ FIXED — preflight handler
+app.options("(.*)", cors());
 
 // Middlewares
 app.use(cookieParser());
@@ -53,7 +43,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/food-partner", foodPartnerRoutes);
 
-// Root route
-app.get("/", (req, res) => res.send("Backend is running"));
+// Root
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
 module.exports = app;
