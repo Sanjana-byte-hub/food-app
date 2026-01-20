@@ -36,5 +36,9 @@ app.use("/api/food-partner", foodPartnerRoutes);
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
+app.get("/test", (req, res) => {
+  res.send("TEST OK");
+});
+
 
 module.exports = app;
