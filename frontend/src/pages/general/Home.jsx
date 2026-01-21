@@ -11,27 +11,31 @@ const Home = () => {
   const [videos, setVideos] = useState([]);
  
 
-  
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target.querySelector("video");
-          if (!video) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector("video");
+        if (!video) return;
 
-          entry.isIntersecting && entry.intersectionRatio > 0.6
-            ? video.play().catch(() => {})
-            : video.pause();
-        });
-      },
-      { threshold: [0.6] }
-    );
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          if (!video.src) {
+            video.src = video.dataset.src;
+          }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: [0.6] }
+  );
 
-    const items = containerRef.current?.querySelectorAll(".reel");
-    items?.forEach((item) => observer.observe(item));
+  const items = containerRef.current?.querySelectorAll(".reel");
+  items?.forEach((item) => observer.observe(item));
 
-    return () => observer.disconnect();
-  }, [videos]);
+  return () => observer.disconnect();
+}, [videos]);
 
   
   useEffect(() => {
@@ -97,7 +101,15 @@ const saveVideo = async (foodId) => {
       <div className="reels-container" ref={containerRef}>
         {videos.map((v) => (
           <div className="reel" key={v._id}>
-            <video className="reel-video" src={v.video} muted loop playsInline />
+           <video
+  className="reel-video"
+  data-src={v.video}
+  muted
+  loop
+  playsInline
+  preload="none"
+/>
+
             <div className="reel-gradient" />
 
             <div className="reel-actions">

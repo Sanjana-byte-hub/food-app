@@ -58,7 +58,17 @@ const Profile = () => {
     <div className="videos-grid">
   {videos.map((v, i) => (
     <div key={i} className="video-tile">
-      <video src={v.video} muted playsInline />
+      {/* <video src={v.video} muted playsInline /> */}
+      <video
+  className="reel-video"
+  data-src={v.video}
+  muted
+  loop
+  playsInline
+  preload="none"
+/>
+
+
     </div>
   ))}
 </div>
