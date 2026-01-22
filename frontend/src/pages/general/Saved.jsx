@@ -18,12 +18,13 @@ const Profile = () => {
       })
       .then((response) => {
         setProfile(response.data.foodPartner);
-        setVideos(response.data.foodPartner.foodItems || []);
+        setVideos(response.data.foodPartner.foodItems.slice(0, 6));
+
       })
       .catch((err) => console.error(err));
   }, [id]);
 
-  // ✅ Lazy load videos (CRITICAL)
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -83,14 +84,14 @@ const Profile = () => {
       <div className="videos-grid">
         {videos.map((v) => (
           <div key={v._id} className="video-tile">
-            <video
-              data-src={v.videoUrl}
-              muted
-              playsInline
-              preload="none"
-              controls={false}
-              poster={v.thumbnailUrl}
-            />
+           <video
+  data-src={v.video}
+  poster={v.thumbnail}  
+  muted
+  playsInline
+  preload="none"
+/>
+
           </div>
         ))}
       </div>

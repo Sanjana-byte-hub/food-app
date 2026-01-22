@@ -44,7 +44,7 @@ const Home = () => {
       .then((res) => {
         const foodItems = res.data.foodItems || [];
         
-        setVideos(foodItems);
+        setVideos(foodItems.slice(0, 5));
       })
       .catch((err) => {
         console.error("Fetch error:", err);
@@ -102,13 +102,13 @@ const saveVideo = async (foodId) => {
         {videos.map((v) => (
           <div className="reel" key={v._id}>
            <video
-  className="reel-video"
   data-src={v.video}
+  poster={v.thumbnail}   
   muted
-  loop
   playsInline
   preload="none"
 />
+
 
             <div className="reel-gradient" />
 
@@ -145,12 +145,13 @@ const saveVideo = async (foodId) => {
 
             <div className="overlay">
               <div className="description">{v.description}</div>
-              <Link
+             <Link
   className="visit-btn"
-  to={`/food-partner/${v.foodPartner?._id || ""}`}
+  to={v.foodPartner?._id ? `/food-partner/${v.foodPartner._id}` : "#"}
 >
   Visit Store
 </Link>
+
 
 
             </div>
