@@ -38,7 +38,7 @@ async function getFoodItems(req, res) {
   // Get all food items
   const foods = await foodModel
   .find()
-  .populate("foodPartner");
+  .populate("foodPartner","_id name address");
 
   // If a user is logged in, track liked/saved status
   const userId = req.user?._id;

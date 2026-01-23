@@ -151,7 +151,12 @@ const saveVideo = async (foodId) => {
  v.foodPartner._id && (
   <Link
     className="visit-btn"
-    to={`/food-partner/${v.foodPartner._id}`}
+    to={`/food-partner/${
+  typeof v.foodPartner === "object"
+    ? v.foodPartner._id
+    : v.foodPartner
+}`}
+
   >
     Visit Store
   </Link>
