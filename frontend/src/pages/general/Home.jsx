@@ -12,40 +12,43 @@ const Home = () => {
  
 
  useEffect(() => {
+  if (!containerRef.current) return;
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-          if (!video.src) {
-            video.src = video.dataset.src;
-          }
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+        entry.isIntersecting
+          ? video.play().catch(() => {})
+          : video.pause();
       });
     },
-    { threshold: [0.6] }
+    { threshold: 0.6 }
   );
+
+  const items = containerRef.current.querySelectorAll(".reel");
+  items.forEach((item) => observer.observe(item));
+
+  return () => observer.disconnect();
+}, [videos]);
 
 
 
   
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/api/food`, { withCredentials: true })
-     .then((res) => {
-  setVideos(res.data.foodItems || []);
-});
-
-      .catch((err) => {
-        console.error("Fetch error:", err);
-        setVideos([]);
-      });
-  }, []);
+  axios
+    .get(`${BACKEND_URL}/api/food`, { withCredentials: true })
+    .then((res) => {
+      const foodItems = res.data.foodItems || [];
+      setVideos(foodItems);
+    })
+    .catch((err) => {
+      console.error("Fetch error:", err);
+      setVideos([]);
+    });
+}, []);   
 
   
 
