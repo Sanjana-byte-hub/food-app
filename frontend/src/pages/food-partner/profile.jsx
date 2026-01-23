@@ -11,17 +11,31 @@ const Profile = () => {
   const[videos,setVideos] = useState([])
   //const videos = Array.from({ length: 12 });
 
-  useEffect(() => {
-  axios
-    .get(`${BACKEND_URL}/api/food-partner/${id}`, {
-      withCredentials: true,
-    })
-    .then((response) => {
-      setProfile(response.data.foodPartner);          // partner details
-      setVideos(response.data.foodPartner.foodItems); // videos/foods
-    })
-    .catch((err) => console.error(err));
-}, [id]);
+ useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector("video");
+        if (!video) return;
+
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.src;
+          }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
+
+  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
+  items?.forEach((item) => observer.observe(item));
+
+  return () => observer.disconnect();
+}, []);
 
 
   return (
@@ -59,14 +73,16 @@ const Profile = () => {
   {videos.map((v, i) => (
     <div key={i} className="video-tile">
      
-    <video
+  <video
   className="reel-video"
-  src={v.video}
   muted
   playsInline
-  preload="metadata"   
+  preload="none"
   controls={false}
+  data-src={v.video}
 />
+
+
 
 
 

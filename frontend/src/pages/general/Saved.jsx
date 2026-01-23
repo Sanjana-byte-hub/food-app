@@ -26,30 +26,30 @@ const Profile = () => {
 
   
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target.querySelector("video");
-          if (!video) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector("video");
+        if (!video) return;
 
-          if (entry.isIntersecting) {
-            if (!video.src) {
-              video.src = video.dataset.src;
-            }
-            video.play().catch(() => {});
-          } else {
-            video.pause();
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.src;
           }
-        });
-      },
-      { threshold: 0.6 }
-    );
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
 
-    const items = containerRef.current?.querySelectorAll(".video-tile");
-    items?.forEach((item) => observer.observe(item));
+  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
+  items?.forEach((item) => observer.observe(item));
 
-    return () => observer.disconnect();
-  }, [videos]);
+  return () => observer.disconnect();
+}, []);
 
   return (
     <div className="profile-container" ref={containerRef}>
@@ -84,14 +84,15 @@ const Profile = () => {
       <div className="videos-grid">
         {videos.map((v) => (
           <div key={v._id} className="video-tile">
-           <video
+        <video
   className="reel-video"
-  src={v.video}
   muted
   playsInline
-  preload="metadata"  
+  preload="none"
   controls={false}
+  data-src={v.video}
 />
+
 
 
           </div>

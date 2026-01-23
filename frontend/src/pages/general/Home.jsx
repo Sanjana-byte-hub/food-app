@@ -18,22 +18,25 @@ const Home = () => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-  video.play().catch(() => {});
-} else {
-  video.pause();
-}
-
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.src;
+          }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
       });
     },
-    { threshold: [0.6] }
+    { threshold: 0.6 }
   );
 
-  const items = containerRef.current?.querySelectorAll(".reel");
+  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
   items?.forEach((item) => observer.observe(item));
 
   return () => observer.disconnect();
-}, [videos]);
+}, []);
+
 
   
   useEffect(() => {
@@ -99,12 +102,13 @@ const saveVideo = async (foodId) => {
       <div className="reels-container" ref={containerRef}>
         {videos.map((v) => (
           <div className="reel" key={v._id}>
-           <video
+         <video
   className="reel-video"
-  src={v.video}
   muted
   playsInline
-  preload="metadata"
+  preload="none"
+  controls={false}
+  data-src={v.video}
 />
 
 
@@ -145,7 +149,9 @@ const saveVideo = async (foodId) => {
 
             <div className="overlay">
               <div className="description">{v.description}</div>
-             {v.foodPartner && typeof v.foodPartner === "object" && v.foodPartner._id && (
+             {v.foodPartner &&
+ typeof v.foodPartner === "object" &&
+ v.foodPartner._id && (
   <Link
     className="visit-btn"
     to={`/food-partner/${v.foodPartner._id}`}
@@ -153,6 +159,7 @@ const saveVideo = async (foodId) => {
     Visit Store
   </Link>
 )}
+
 
 
 
