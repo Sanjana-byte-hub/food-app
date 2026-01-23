@@ -19,13 +19,11 @@ const Home = () => {
         if (!video) return;
 
         if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-          if (!video.src) {
-            video.src = video.dataset.src;
-          }
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+  video.play().catch(() => {});
+} else {
+  video.pause();
+}
+
       });
     },
     { threshold: [0.6] }
@@ -102,12 +100,14 @@ const saveVideo = async (foodId) => {
         {videos.map((v) => (
           <div className="reel" key={v._id}>
            <video
-  data-src={v.video}
-  poster={v.thumbnail}   
+  className="reel-video"
+  src={v.video}
   muted
   playsInline
-  preload="none"
+  preload="metadata"
 />
+
+
 
 
             <div className="reel-gradient" />
@@ -145,12 +145,15 @@ const saveVideo = async (foodId) => {
 
             <div className="overlay">
               <div className="description">{v.description}</div>
-             <Link
-  className="visit-btn"
-  to={v.foodPartner?._id ? `/food-partner/${v.foodPartner._id}` : "#"}
->
-  Visit Store
-</Link>
+             {v.foodPartner && typeof v.foodPartner === "object" && v.foodPartner._id && (
+  <Link
+    className="visit-btn"
+    to={`/food-partner/${v.foodPartner._id}`}
+  >
+    Visit Store
+  </Link>
+)}
+
 
 
 

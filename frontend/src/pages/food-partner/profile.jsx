@@ -59,12 +59,13 @@ const Profile = () => {
   {videos.map((v, i) => (
     <div key={i} className="video-tile">
      
-     <video
-  data-src={v.video}
-  poster={v.thumbnail}   
+    <video
+  className="reel-video"
+  src={v.video}
   muted
   playsInline
-  preload="none"
+  preload="metadata"   
+  controls={false}
 />
 
 
