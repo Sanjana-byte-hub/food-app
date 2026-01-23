@@ -104,6 +104,7 @@ const saveVideo = async (foodId) => {
   muted
   playsInline
   preload="none"
+   poster={v.thumbnail || "https://via.placeholder.com/506x960.png?text=Video+Coming+Soon"}
   data-src={v.video}
 />
 
