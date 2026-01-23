@@ -18,14 +18,15 @@ const Profile = () => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        if (entry.isIntersecting) {
-          if (!video.src) {
-            video.src = video.dataset.src;
-          }
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+       if (entry.isIntersecting) {
+  if (!video.src) {
+    video.src = video.dataset.src;
+  }
+  video.play().catch(() => {});
+} else {
+  video.pause();
+}
+
       });
     },
     { threshold: 0.6 }
@@ -78,10 +79,8 @@ const Profile = () => {
   muted
   playsInline
   preload="none"
-  controls={false}
   data-src={v.video}
 />
-
 
 
 

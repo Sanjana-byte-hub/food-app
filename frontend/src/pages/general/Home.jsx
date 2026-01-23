@@ -11,14 +11,14 @@ const Home = () => {
   const [videos, setVideos] = useState([]);
  
 
-  useEffect(() => {
+ useEffect(() => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
           if (!video.src) {
             video.src = video.dataset.src;
           }
@@ -28,25 +28,19 @@ const Home = () => {
         }
       });
     },
-    { threshold: 0.6 }
+    { threshold: [0.6] }
   );
 
-  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
-  items?.forEach((item) => observer.observe(item));
-
-  return () => observer.disconnect();
-}, []);
 
 
   
   useEffect(() => {
     axios
       .get(`${BACKEND_URL}/api/food`, { withCredentials: true })
-      .then((res) => {
-        const foodItems = res.data.foodItems || [];
-        
-        setVideos(foodItems.slice(0, 5));
-      })
+     .then((res) => {
+  setVideos(res.data.foodItems || []);
+});
+
       .catch((err) => {
         console.error("Fetch error:", err);
         setVideos([]);
@@ -102,14 +96,14 @@ const saveVideo = async (foodId) => {
       <div className="reels-container" ref={containerRef}>
         {videos.map((v) => (
           <div className="reel" key={v._id}>
-         <video
+       <video
   className="reel-video"
   muted
   playsInline
   preload="none"
-  controls={false}
   data-src={v.video}
 />
+
 
 
 

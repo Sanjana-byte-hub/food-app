@@ -18,7 +18,7 @@ const Profile = () => {
       })
       .then((response) => {
         setProfile(response.data.foodPartner);
-        setVideos(response.data.foodPartner.foodItems.slice(0, 6));
+         setVideos(response.data.foodPartner.foodItems || []);
 
       })
       .catch((err) => console.error(err));
@@ -32,15 +32,15 @@ const Profile = () => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        if (entry.isIntersecting) {
-          if (!video.src) {
-            video.src = video.dataset.src;
-          }
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      });
+       if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+  if (!video.src) {
+    video.src = video.dataset.src;
+  }
+  video.play().catch(() => {});
+} else {
+  video.pause();
+}
+
     },
     { threshold: 0.6 }
   );
@@ -84,12 +84,11 @@ const Profile = () => {
       <div className="videos-grid">
         {videos.map((v) => (
           <div key={v._id} className="video-tile">
-        <video
+      <video
   className="reel-video"
   muted
   playsInline
   preload="none"
-  controls={false}
   data-src={v.video}
 />
 
