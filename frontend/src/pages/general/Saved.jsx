@@ -10,6 +10,12 @@ const thumbnails = [
   "/thumbs/food3.jpg",
   "/thumbs/food4.jpg",
   "/thumbs/food5.jpg",
+  "/thumbs/food6.jpg",
+  "/thumbs/food7.jpg",
+  "/thumbs/food8.jpg",
+  "/thumbs/food9.jpg",
+  "/thumbs/food10.jpg",
+  "/thumbs/food11.jpg",
 ];
 
 const Profile = () => {
