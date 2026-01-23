@@ -1,6 +1,6 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import "../styles/bottomnav.css";
+// import React from "react";
+// import { Link, useLocation } from "react-router-dom";
+// import "../styles/bottomnav.css";
 
 // const BottomNav = () => {
 //   const location = useLocation();
@@ -44,4 +44,4 @@ import "../styles/bottomnav.css";
 //   );
 // };
 
-export default BottomNav;
+//export default BottomNav;
