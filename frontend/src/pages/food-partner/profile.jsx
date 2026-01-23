@@ -12,32 +12,23 @@ const Profile = () => {
   const[videos,setVideos] = useState([])
   //const videos = Array.from({ length: 12 });
 
- useEffect(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target.querySelector("video");
-        if (!video) return;
-
-       if (entry.isIntersecting) {
-  if (!video.src) {
-    video.src = video.dataset.src;
+useEffect(() => {
+  if (!id) {
+    console.warn("Profile ID missing — skipping API call");
+    return;
   }
-  video.play().catch(() => {});
-} else {
-  video.pause();
-}
 
-      });
-    },
-    { threshold: 0.6 }
-  );
+  axios
+    .get(`${BACKEND_URL}/api/food-partner/${id}`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      setProfile(response.data.foodPartner);
+      setVideos(response.data.foodPartner.foodItems || []);
+    })
+    .catch((err) => console.error("Profile fetch error", err));
+}, [id]);
 
-  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
-  items?.forEach((item) => observer.observe(item));
-
-  return () => observer.disconnect();
-}, []);
 
 
   return (
