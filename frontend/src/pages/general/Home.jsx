@@ -5,31 +5,45 @@ import BottomNav from "../../components/BottomNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BACKEND_URL } from "../../config";
+const thumbnails = [
+  "/thumbs/food1.jpg",
+  "/thumbs/food2.jpg",
+  "/thumbs/food3.jpg",
+  "/thumbs/food4.jpg",
+  "/thumbs/food5.jpg",
+];
+
 
 const Home = () => {
   const containerRef = useRef(null);
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+  if (!containerRef.current) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target.querySelector("video");
-          if (!video) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target.querySelector("video");
+      if (!video) return;
 
-          entry.isIntersecting ? video.play().catch(() => {}) : video.pause();
-        });
-      },
-      { threshold: 0.6 },
-    );
+      if (entry.isIntersecting) {
+        if (!video.src) {
+          video.src = video.dataset.src;
+          video.load();
+        }
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.6 });
 
-    const items = containerRef.current.querySelectorAll(".reel");
-    items.forEach((item) => observer.observe(item));
+  const items = containerRef.current.querySelectorAll(".reel");
+  items.forEach((item) => observer.observe(item));
 
-    return () => observer.disconnect();
-  }, [videos]);
+  return () => observer.disconnect();
+}, [videos]);
+
 
   useEffect(() => {
     axios
@@ -85,17 +99,14 @@ const Home = () => {
   return (
     <div className="home-wrapper">
       <div className="reels-container" ref={containerRef}>
-        {videos.map((v) => (
+        {videos.map((v,i) => (
           <div className="reel" key={v._id}>
             <video
               className="reel-video"
               muted
               playsInline
               preload="none"
-              poster={
-                v.thumbnail ||
-                "/pizzaimage.jpg"
-              }
+              poster={thumbnails[i % thumbnails.length]}
               data-src={v.video}
             />
 

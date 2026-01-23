@@ -4,6 +4,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 
+const thumbnails = [
+  "/thumbs/food1.jpg",
+  "/thumbs/food2.jpg",
+  "/thumbs/food3.jpg",
+  "/thumbs/food4.jpg",
+  "/thumbs/food5.jpg",
+];
 
 const Profile = () => {
   const { id } = useParams();
@@ -71,7 +78,7 @@ useEffect(() => {
   muted
   playsInline
   preload="none"
-   poster={v.thumbnail || "/pizzaimage.jpg"}
+   poster={thumbnails[i % thumbnails.length]}
   data-src={v.video}
 />
 
