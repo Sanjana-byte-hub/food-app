@@ -3,7 +3,6 @@ import "../../styles/profile.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
-const containerRef = useRef(null);
 
 
 const Profile = () => {
@@ -14,28 +13,31 @@ const Profile = () => {
   //const videos = Array.from({ length: 12 });
 
  useEffect(() => {
-  if (!containerRef.current) return;
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         const video = entry.target.querySelector("video");
         if (!video) return;
 
-        entry.isIntersecting
-          ? video.play().catch(() => {})
-          : video.pause();
+       if (entry.isIntersecting) {
+  if (!video.src) {
+    video.src = video.dataset.src;
+  }
+  video.play().catch(() => {});
+} else {
+  video.pause();
+}
+
       });
     },
     { threshold: 0.6 }
   );
 
-  const items = containerRef.current.querySelectorAll(".video-tile");
-  items.forEach((item) => observer.observe(item));
+  const items = containerRef.current?.querySelectorAll(".reel, .video-tile");
+  items?.forEach((item) => observer.observe(item));
 
   return () => observer.disconnect();
-}, [videos]);
-
+}, []);
 
 
   return (
