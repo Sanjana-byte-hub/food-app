@@ -71,7 +71,7 @@ useEffect(() => {
   muted
   playsInline
   preload="none"
-   poster={v.thumbnail || "https://via.placeholder.com/506x960.png?text=Video+Coming+Soon"}
+   poster={v.thumbnail || "/pizzaimage.jpg"}
   data-src={v.video}
 />
 
