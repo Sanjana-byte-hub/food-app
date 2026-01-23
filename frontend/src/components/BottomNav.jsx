@@ -23,7 +23,7 @@ const BottomNav = () => {
         </svg>
         <span className="nav-label">Home</span>
       </Link>
-      <Link
+      {/* <Link
         to="/saved"
         className={`nav-item ${location.pathname === "/saved" ? "active" : ""}`}
       >
@@ -39,7 +39,7 @@ const BottomNav = () => {
           <polyline points="7 5 7 1 17 1 17 5" />
         </svg>
         <span className="nav-label">Saved</span>
-      </Link>
+      </Link> */}
     </div>
   );
 };

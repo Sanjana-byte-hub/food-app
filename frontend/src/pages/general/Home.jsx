@@ -127,12 +127,12 @@ const Home = () => {
                 <span>{v.likeCount || 0}</span>
               </button>
 
-              <button
+              {/* <button
                 className={`action-btn save-btn ${v.saved ? "active" : ""}`}
                 onClick={() => saveVideo(v._id)}
               >
                 ⭐<span>{v.saveCount || 0}</span>
-              </button>
+              </button> */}
 
               <button className="action-btn comment-btn">
                 <svg
